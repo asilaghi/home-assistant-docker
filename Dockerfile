@@ -8,12 +8,11 @@ RUN apk add --no-cache python3 && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
 
-RUN apk add --no-cache musl-dev openssl-dev python3-dev libffi-dev gcc && \
-    rm -r /root/.cache
+RUN apk add --no-cache musl-dev openssl-dev python3-dev libffi-dev gcc
 
 RUN python3 -m pip install wheel && \
     python3 -m pip install homeassistant
 
-RUN apk del musl-dev openssl-dev python3-dev libffi-dev gcc
+RUN apk del musl-dev openssl-dev python3-dev libffi-dev gcc 
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["hass --open-ui"]
