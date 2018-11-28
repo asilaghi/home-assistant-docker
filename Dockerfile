@@ -12,4 +12,4 @@ RUN apk add --no-cache python3 && \
     python3 -m pip install homeassistant && \
     apk del musl-dev openssl-dev python3-dev libffi-dev gcc 
 
-ENTRYPOINT ["hass -v --open-ui"]
+ENTRYPOINT ["/bin/bash"]
