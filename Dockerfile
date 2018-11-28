@@ -6,10 +6,13 @@ RUN apk add --no-cache python3 && \
     pip3 install --upgrade pip setuptools && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-    rm -r /root/.cache && \
-    apk add --no-cache musl-dev openssl-dev python3-dev libffi-dev gcc && \
-    python3 -m pip install wheel && \
+    apk add --no-cache musl-dev openssl-dev python3-dev libffi-dev gcc linux-headers && \
+    python3 -m pip install wheel aiohttp-cors sqlalchemy netifaces && \
     python3 -m pip install homeassistant && \
-    apk del musl-dev openssl-dev python3-dev libffi-dev gcc 
+    rm -r /root/.cache || true
 
-ENTRYPOINT ["/bin/bash"]
+RUN mkdir /config
+
+VOLUME ["/config"]
+
+CMD hass -c /config --open-ui
